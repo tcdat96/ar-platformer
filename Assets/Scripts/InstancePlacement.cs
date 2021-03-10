@@ -16,12 +16,19 @@ public class InstancePlacement : MonoBehaviour
 
     private Pose destinationPose;
     private bool isMoving = false;
-    public float speed = 10;
+
+    public float walkingSpeed = 1;
+    public float runningSpeed = 2;
+    public float rotatingSpeed = 15;
+
+
     public GameObject character;
+    private Animator animator;
 
     void Start()
     {
         raycastManager = FindObjectOfType<ARRaycastManager>();
+        animator = character.GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -119,20 +126,35 @@ public class InstancePlacement : MonoBehaviour
         if (hits.Count > 0)
         {
             destinationPose = hits[0].pose;
-            isMoving = true;
+            SetMovingSpeed(walkingSpeed);
         }
     }
 
     private void MoveCharacter(Vector3 target)
     {
-        // move it to desired position
         Transform transform = character.transform;
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-        
-        // check if we've reached the destionation
-        if (transform.position == target)
+
+        // rotate character
+        Vector3 targetDirection = target - transform.position;
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, rotatingSpeed * Time.deltaTime, .0f);
+        transform.rotation = Quaternion.LookRotation(newDirection);
+
+        // determine moving speed
+        float distance = Vector3.Distance(transform.position, target);
+        float movingSpeed = distance < 0.1 ? 0 : (distance < 1 ? walkingSpeed : runningSpeed);
+        SetMovingSpeed(movingSpeed);
+
+        // move to desired position
+        transform.position = Vector3.MoveTowards(transform.position, target, movingSpeed * Time.deltaTime);
+    }
+
+    private void SetMovingSpeed(float speed = 0)
+    {
+        isMoving = speed > 0;
+        if (animator.GetFloat("movingSpeed") != speed)
         {
-            isMoving = false;
+            print(speed);
+            animator.SetFloat("movingSpeed", speed);
         }
     }
 }
