@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c3dc2d9b67a9c874bb76878942023a0d, type: 2}
+  m_Motion: {fileID: 7400000, guid: 38aa809c42a197044812c0bf3377af8a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -36,8 +36,8 @@ AnimatorStateTransition:
   m_Name: startWalking
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: movingSpeed
-    m_EventTreshold: 0
+    m_ConditionEvent: MoveSpeed
+    m_EventTreshold: 0.5
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1902733941860090189}
   m_Solo: 0
@@ -61,8 +61,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: movingSpeed
-    m_EventTreshold: 1.1
+    m_ConditionEvent: MoveSpeed
+    m_EventTreshold: 1.5
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5214001021980869554}
   m_Solo: 0
@@ -98,7 +98,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b71b805e5d6707b44ad399a1eace7485, type: 2}
+  m_Motion: {fileID: 7400000, guid: 64d110a3221c4594ca29834e2ecce4c3, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -113,8 +113,14 @@ AnimatorController:
   m_Name: CharacterController
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: movingSpeed
+  - m_Name: MoveSpeed
     m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: MoveState
+    m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -154,7 +160,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 3ccee96dfe624b643bfbe7e91a384880, type: 2}
+  m_Motion: {fileID: 7400000, guid: dddefd4e2d0a1f74990cb5b91616453e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -169,8 +175,8 @@ AnimatorStateTransition:
   m_Name: stopWalking
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: movingSpeed
-    m_EventTreshold: 0.2
+    m_ConditionEvent: MoveSpeed
+    m_EventTreshold: 0.5
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -524313721781796067}
   m_Solo: 0
@@ -194,8 +200,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: movingSpeed
-    m_EventTreshold: 1.1
+    m_ConditionEvent: MoveSpeed
+    m_EventTreshold: 1.5
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1902733941860090189}
   m_Solo: 0
@@ -204,10 +210,10 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
-  m_ExitTime: 0.6428572
-  m_HasExitTime: 1
+  m_ExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
-  m_InterruptionSource: 0
+  m_InterruptionSource: 3
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!1107 &7566052619577277784
@@ -224,7 +230,7 @@ AnimatorStateMachine:
     m_Position: {x: 240, y: 400, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5214001021980869554}
-    m_Position: {x: 240, y: 90, z: 0}
+    m_Position: {x: 240, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1902733941860090189}
     m_Position: {x: 240, y: 240, z: 0}

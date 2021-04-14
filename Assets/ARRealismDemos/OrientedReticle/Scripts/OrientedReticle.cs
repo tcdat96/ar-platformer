@@ -79,6 +79,7 @@ public class OrientedReticle : MonoBehaviour
                     distance));
 
                 transform.position = translation;
+
             }
 
             Quaternion? orientation = ComputeCenterScreenOrientation();
