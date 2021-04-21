@@ -18,6 +18,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -129,20 +130,20 @@ public class DepthMeshCollider : MonoBehaviour
     /// </summary>
     public void ShootPrefab()
     {
-        if (m_Root == null)
-        {
-            m_Root = new GameObject("Projectiles");
-        }
+        // if (m_Root == null)
+        // {
+        //     m_Root = new GameObject("Projectiles");
+        // }
 
-        GameObject bullet = Instantiate(
-            Projectiles[m_Random.Next(Projectiles.Length)],
-            SceneCamera.transform.position + (SceneCamera.transform.forward * ForwardOffset),
-            Quaternion.identity) as GameObject;
+        // GameObject bullet = Instantiate(
+        //     Projectiles[m_Random.Next(Projectiles.Length)],
+        //     SceneCamera.transform.position + (SceneCamera.transform.forward * ForwardOffset),
+        //     Quaternion.identity) as GameObject;
 
-        Vector3 forceVector = SceneCamera.transform.forward * ProjectileThrust;
-        bullet.GetComponent<Rigidbody>().velocity = forceVector;
-        bullet.transform.parent = m_Root.transform;
-        m_GameObjects.Add(bullet);
+        // Vector3 forceVector = SceneCamera.transform.forward * ProjectileThrust;
+        // bullet.GetComponent<Rigidbody>().velocity = forceVector;
+        // bullet.transform.parent = m_Root.transform;
+        // m_GameObjects.Add(bullet);
     }
 
     /// <summary>
@@ -228,8 +229,6 @@ public class DepthMeshCollider : MonoBehaviour
         }
     }
 
-    float time = 0;
-
     private void Update()
     {
         if (m_Initialized)
@@ -242,13 +241,6 @@ public class DepthMeshCollider : MonoBehaviour
             {
                 UpdateCollider();
             }
-
-            // if ((time -= Time.deltaTime) < 0) {
-            //     time = 1f;
-            //     Debug.Log("triggered");
-            //     UpdateMesh();
-            // }
-            // Graphics.DrawMesh(m_Mesh, Vector3.zero, Quaternion.identity, meshMaterial, 0);
         }
         else
         {

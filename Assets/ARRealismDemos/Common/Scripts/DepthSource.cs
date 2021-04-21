@@ -588,6 +588,7 @@ public class DepthSource : MonoBehaviour
                 target.DepthTargetMaterial.mainTexture = depthTexture;
             }
         }
+        else if (!target.DepthTargetMaterial.HasProperty(k_CurrentDepthTexturePropertyName)) {}
         else if (target.DepthTargetMaterial.GetTexture(k_CurrentDepthTexturePropertyName) !=
             depthTexture)
         {
