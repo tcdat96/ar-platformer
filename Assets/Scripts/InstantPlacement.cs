@@ -15,7 +15,11 @@ public class InstantPlacement : MonoBehaviour
     /// <summary>
     /// References the object to place.
     /// </summary>
-    public GameObject character;
+    public GameObject Character;
+
+    public GameObject DustParticles;
+
+    public GameObject Portal;
 
     public Text CurrentPositionText;
     public Text ReticlePositionText;
@@ -36,22 +40,46 @@ public class InstantPlacement : MonoBehaviour
         //     MoveCharacter();
         // }
 
-        CurrentPositionText.text = character.transform.position.ToString();
+        CurrentPositionText.text = Character.transform.position.ToString();
         ReticlePositionText.text = DepthCursor.transform.position.ToString();
-        RayHitDistanceText.text = character.GetComponent<CharacterController>().RayHitDistance.ToString();
+        RayHitDistanceText.text = Character.GetComponent<CharacterController>().RayHitDistance.ToString();
+    }
+
+    private Vector3 GetCursorPosition()
+    {
+        Vector3 toCamera = Camera.main.transform.position - DepthCursor.transform.position;
+        toCamera.Normalize();
+        return DepthCursor.transform.position + (toCamera * k_AvatarOffsetMeters);
     }
 
     public void MoveCharacter()
     {
-        Vector3 toCamera = Camera.main.transform.position - DepthCursor.transform.position;
-        toCamera.Normalize();
-
-        Vector3 destination = DepthCursor.transform.position + (toCamera * k_AvatarOffsetMeters);
-        if (!character.activeSelf)
+        Vector3 destination = GetCursorPosition();
+        if (!Character.activeSelf)
         {
-            character.transform.SetPositionAndRotation(destination, DepthCursor.transform.rotation);
-            character.SetActive(true);
+            Character.transform.SetPositionAndRotation(destination, DepthCursor.transform.rotation);
+            Character.SetActive(true);
         }
-        character.GetComponent<CharacterController>().Destination = destination;
+        Character.GetComponent<CharacterController>().Destination = destination;
+    }
+
+    public void SlamCharacter()
+    {
+        Character.GetComponent<CharacterController>().Slam();
+        StartCoroutine(ShowDustParticles());
+    }
+
+    IEnumerator ShowDustParticles()
+    {
+        yield return new WaitForSeconds(2f);
+        DustParticles.transform.position = Character.transform.position;
+        DustParticles.SetActive(true);
+        DustParticles.GetComponent<ParticleSystem>().Play();
+    }
+
+    public void ShowPortal()
+    {
+        Vector3 cursorPos = GetCursorPosition();
+        Portal.transform.position = cursorPos;
     }
 }

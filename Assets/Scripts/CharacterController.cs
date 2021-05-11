@@ -194,4 +194,9 @@ public class CharacterController : MonoBehaviour
             animator.SetFloat(speedName, speed);
         }
     }
+
+    public void Slam()
+    {
+        animator.SetTrigger("Slam");
+    }
 }

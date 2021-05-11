@@ -30,6 +30,18 @@ Shader "ARCore/ARBackground"
     // For GLES3 or GLES2 on device
     SubShader
     {
+        Tags
+        { 
+            "RenderType"="Transparent"
+            "Queue"="Geometry+2"
+        }
+     
+        Stencil
+        {
+            Ref 1
+            Comp NotEqual
+        }
+
         Pass
         {
             ZWrite Off
@@ -146,6 +158,18 @@ Shader "ARCore/ARBackground"
     // For Instant Preview
     Subshader
     {
+        Tags
+        { 
+            "RenderType"="Transparent"
+            "Queue"="Geometry+2"
+        }
+     
+        Stencil
+        {
+            Ref 1
+            Comp NotEqual
+        }
+
         Pass
         {
             ZWrite Off
