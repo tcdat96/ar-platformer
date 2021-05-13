@@ -22,6 +22,11 @@ public class InstantPlacement : MonoBehaviour
 
     public GameObject Portal;
 
+
+    public GameObject Hole;
+    private bool isTurfMoving = false;
+
+
     public Text CurrentPositionText;
     public Text ReticlePositionText;
     public Text RayHitDistanceText;
@@ -101,5 +106,64 @@ public class InstantPlacement : MonoBehaviour
     {
         Vector3 cursorPos = GetCursorPosition();
         Portal.transform.position = cursorPos;
+    }
+
+    public void CutHole()
+    {
+        if (isTurfMoving)
+        {
+            return;
+        }
+        isTurfMoving = true;
+
+        Vector3 position = GetCursorPosition();
+        float turfHeight = Hole.transform.GetChild(0).lossyScale.y;
+        position.y -= turfHeight / 2;
+
+        Transform turf = Hole.transform.GetChild(0);
+        if (Hole.activeSelf)
+        {
+            // put the turf down
+            Vector3 dest = turf.position - new Vector3(0, turfHeight * 2, 0);
+            StartCoroutine(_MoveTurf(turf, turf.position, dest, .2f));
+        }
+        else
+        {
+            // show the turf
+            Hole.transform.position = position;
+            Hole.SetActive(true);
+            // pull it up
+            Vector3 dest = position + new Vector3(0, turfHeight * 2, 0);
+            StartCoroutine(_MoveTurf(turf, position, dest, .2f));
+        }
+    }
+
+    private IEnumerator _MoveTurf(Transform turf, Vector3 a, Vector3 b, float speed)
+    {
+        float step = (speed / (a - b).magnitude) * Time.fixedDeltaTime;
+        float t = 0;
+        while (t <= 1.0f)
+        {
+            t += step; // Goes from 0 to 1, incrementing by step each time
+            turf.position = Vector3.Lerp(a, b, t); // Move turf closer to b
+            yield return new WaitForFixedUpdate();         // Leave the routine and return here in the next frame
+        }
+        
+        turf.position = b;
+        isTurfMoving = false;
+
+        // if putting turf down
+        if (b.y < a.y) {
+            turf.parent.gameObject.SetActive(false);
+        }
+    }
+
+    public void Clear()
+    {
+        Character.SetActive(false);
+        Dungeon.SetActive(false);
+        DustParticles.SetActive(false);
+        Portal.SetActive(false);
+        Hole.SetActive(false);
     }
 }
