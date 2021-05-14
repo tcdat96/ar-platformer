@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: OutsidePortal
-  m_Shader: {fileID: 4800000, guid: 495418f1088bc6f4e985b9781fc57ff5, type: 3}
+  m_Shader: {fileID: 4800000, guid: 50974f05deac25d4cabb56748b12a1ae, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
